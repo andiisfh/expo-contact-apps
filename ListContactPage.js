@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, FlatList, Image, Button, TouchableOpacity } from 'react-native';
 import axios from 'axios';
+import { Fab, Icon } from 'native-base';
 
 export default class App extends React.Component {
 
@@ -65,7 +66,13 @@ export default class App extends React.Component {
           renderItem={({item}) => this.renderViewItem(item)}
           keyExtractor={({item}, index) => index.toString()}
         />
-        <Button title='Add Contact' onPress={()=> this.addContact()}/>
+        <Fab
+          active="true"
+          style={{ backgroundColor: 'dodgerblue' }}
+          position="bottomRight"
+          onPress={()=> this.addContact()}>
+          <Icon name="add" />
+      </Fab>
       </View>
     );
   }
