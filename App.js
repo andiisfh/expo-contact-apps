@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, FlatList, Image } from 'react-native';
+import { Text, View, FlatList, Image, Button } from 'react-native';
 import axios from 'axios';
 
 export default class App extends React.Component {
@@ -41,6 +41,14 @@ export default class App extends React.Component {
    </View>
   );
   
+  addContact = () => {
+    const dummyContact = { 'firstName': 'Andi', 'lastName': 'Insanudin', 'age': '18', 'photo': 'N/A' };
+
+    this.setState(prevState => ({
+      dataSource: [...prevState.dataSource, dummyContact]
+    }))
+  }
+
   render() {
     return (
       <View style={{flex: 1, paddingTop:20}}>
@@ -49,6 +57,7 @@ export default class App extends React.Component {
           renderItem={({item}) => this.renderViewItem(item)}
           keyExtractor={({item}, index) => index.toString()}
         />
+        <Button title='Add Contact' onPress={()=> this.addContact()}/>
       </View>
     );
   }
