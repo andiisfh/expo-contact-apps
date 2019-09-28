@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View, FlatList } from 'react-native';
 import axios from 'axios';
 
 export default class App extends React.Component {
@@ -20,20 +20,17 @@ export default class App extends React.Component {
     })
   }
   
-  render() {
-    const styles = StyleSheet.create({
-      container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-      },
-    });
+render() {
+    const dummy = ['Andi', 'Luthfi', 'Leo', 'Pandu'];
     
     return (
-      <View style={styles.container}>
-      <Text>Hello world!</Text>
-    </View>
+      <View style={{flex: 1, paddingTop:20}}>
+        <FlatList
+          data={dummy}
+          renderItem={({item}) => <View style={{flex: 1, padding:20}}><Text>{item}</Text></View>}
+          keyExtractor={({item}, index) => index.toString()}
+        />
+      </View>
     );
   }
 }
