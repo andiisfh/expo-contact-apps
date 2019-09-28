@@ -19,7 +19,7 @@ export default class App extends React.Component {
     this.getData();
   }
 
-  getData() {
+  getData = () => {
     axios.get('https://simple-contact-crud.herokuapp.com/contact')
     .then(response => {
       this.setState({
@@ -53,11 +53,8 @@ export default class App extends React.Component {
   }
   
   addContact = () => {
-    const dummyContact = { 'firstName': 'Andi', 'lastName': 'Insanudin', 'age': '18', 'photo': 'N/A' };
-
-    this.setState(prevState => ({
-      dataSource: [...prevState.dataSource, dummyContact]
-    }))
+    const {navigate} = this.props.navigation;
+    navigate('PostContact', {refetch: this.getData})
   }
 
   render() {

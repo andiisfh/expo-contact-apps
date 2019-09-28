@@ -4,6 +4,10 @@ import axios from 'axios';
 
 export default class PostContactPage extends React.Component {
 
+  static navigationOptions = {
+    title: 'Post Contact',
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -15,6 +19,8 @@ export default class PostContactPage extends React.Component {
   }
     
   handleSubmit() {
+    const { navigation } = this.props;
+
     axios.post('https://simple-contact-crud.herokuapp.com/contact', {
         firstName: this.state.firstName,
         lastName: this.state.lastName,
@@ -22,8 +28,11 @@ export default class PostContactPage extends React.Component {
         photo: this.state.photo
     })
     .then(function (response) {
-      // handle success
-      console.log(response.data);
+      const refetch = navigation.state.params.refetch;
+      if(typeof refetch === 'function') {
+        refetch(); 
+        navigation.pop();
+      }
     })
     .catch(function (error) {
       // handle error
