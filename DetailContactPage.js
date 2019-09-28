@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, Image, Button } from 'react-native';
 import axios from 'axios';
+import { StackActions, NavigationActions } from 'react-navigation'
 
 export default class DetailContactPage extends React.Component {
 
@@ -51,6 +52,21 @@ export default class DetailContactPage extends React.Component {
     })
   }
 
+  handleDelete() {
+    axios.delete('https://simple-contact-crud.herokuapp.com/contact/' + this.props.navigation.state.params.id)
+    .then(response => {
+      const resetAction = StackActions.reset({
+        index: 0,
+        actions: [NavigationActions.navigate({ routeName: 'ListContact' })],
+      });
+      navigation.dispatch(resetAction);  
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    });
+  }
+
   render() {
     return (
       <View style={{flex: 1, padding:40}}>
@@ -61,6 +77,8 @@ export default class DetailContactPage extends React.Component {
         <Text style={{marginTop:15, alignSelf: 'center'}}>{this.state.firstName} {this.state.lastName}</Text>
         <Text style={{marginBottom:15, alignSelf: 'center'}}>{this.state.age} years old</Text>
         <Button title='Update Contact' onPress={()=> this.navigateToUpdate()}/>
+        <View style={{margin: 10}}/>
+        <Button title='Delete Contact' onPress={()=> this.handleDelete()}/>
       </View>
     );
   }
