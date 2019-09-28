@@ -3,6 +3,15 @@ import { Text, View, Image } from 'react-native';
 
 export default class DetailContactPage extends React.Component {
 
+  static navigationOptions = {
+    title: 'Detail Contact',
+  };
+
+  constructor(props) {
+    super(props);
+    console.log(props.navigation.state.params.id);
+  }
+
   render() {
     return (
       <View style={{flex: 1, padding:40, alignItems:'center'}}>

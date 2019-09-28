@@ -1,8 +1,12 @@
 import React from 'react';
-import { Text, View, FlatList, Image, Button } from 'react-native';
+import { Text, View, FlatList, Image, Button, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 
 export default class App extends React.Component {
+
+  static navigationOptions = {
+    title: 'List Contact',
+  };
 
   constructor(props) {
     super(props);
@@ -29,17 +33,24 @@ export default class App extends React.Component {
   }
 
   renderViewItem = (item) => (
-    <View style={{flex: 1, padding:20, flexDirection: 'row'}}>
-      <Image
-        style={{width: 50, height: 50, marginRight: 15}}
-        source={{uri: item.photo}}
-      />
-      <View>
-        <Text>{item.firstName} {item.lastName}</Text>
-        <Text>{item.age} years old</Text>
-      </View>
-   </View>
+    <TouchableOpacity onPress={() => this.navigateToDetail(item.id)}>
+      <View style={{flex: 1, padding:20, flexDirection: 'row'}}>
+        <Image
+          style={{width: 50, height: 50, marginRight: 15}}
+          source={{uri: item.photo}}
+        />
+        <View>
+          <Text>{item.firstName} {item.lastName}</Text>
+          <Text>{item.age} years old</Text>
+        </View>
+     </View>
+   </TouchableOpacity>
   );
+
+  navigateToDetail(contactId) {
+    const {navigate} = this.props.navigation;
+    navigate('DetailContact', {id: contactId})
+  }
   
   addContact = () => {
     const dummyContact = { 'firstName': 'Andi', 'lastName': 'Insanudin', 'age': '18', 'photo': 'N/A' };
